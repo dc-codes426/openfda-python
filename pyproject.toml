@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openfda-python"
-version = "0.1.1"
+version = "0.1.2"
 description = "Python wrapper for OpenFDA APIs with comprehensive query support"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -57,7 +57,7 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["api_client*"]
+include = ["openfda_python*"]
 exclude = ["tests*"]
 
 [tool.black]
