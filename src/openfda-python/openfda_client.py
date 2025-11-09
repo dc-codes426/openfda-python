@@ -23,7 +23,7 @@ class RateLimiter:
 
         Args:
             max_requests: Maximum number of requests allowed
-            time_window: Time window in seconds (e.g., 60 for per minute, 86400 for per day)
+            time_window: Time window in seconds (e.g., 60 for per minute)
         """
         self.max_requests = max_requests
         self.time_window = time_window
@@ -58,6 +58,56 @@ class RateLimiter:
             self.tokens -= 1
 
 
+class DailyQuotaLimiter:
+    """Daily quota limiter that resets at midnight UTC."""
+
+    def __init__(self, max_requests_per_day: int):
+        """
+        Initialize daily quota limiter.
+
+        Args:
+            max_requests_per_day: Maximum number of requests allowed per day
+        """
+        self.max_requests = max_requests_per_day
+        self.requests_made = 0
+        self.reset_time = self._calculate_next_midnight()
+        self.lock = threading.Lock()
+
+    def _calculate_next_midnight(self) -> float:
+        """Calculate the timestamp for the next midnight UTC."""
+        import datetime
+        now = datetime.datetime.utcnow()
+        # Next midnight is tomorrow at 00:00:00 UTC
+        next_midnight = datetime.datetime(now.year, now.month, now.day) + datetime.timedelta(days=1)
+        return next_midnight.timestamp()
+
+    def acquire(self):
+        """
+        Acquire permission for making a request.
+        Blocks if daily quota is exhausted until midnight UTC.
+        """
+        with self.lock:
+            now = time.time()
+
+            # Reset counter if we've passed midnight
+            if now >= self.reset_time:
+                self.requests_made = 0
+                self.reset_time = self._calculate_next_midnight()
+                logger.info("Daily quota reset")
+
+            # Check if quota is exhausted
+            if self.requests_made >= self.max_requests:
+                sleep_time = self.reset_time - now
+                logger.info(f"Daily quota of {self.max_requests} requests exhausted. Sleeping until midnight UTC ({sleep_time:.0f} seconds)...")
+                time.sleep(sleep_time)
+                # After sleeping, reset
+                self.requests_made = 0
+                self.reset_time = self._calculate_next_midnight()
+
+            # Increment counter
+            self.requests_made += 1
+
+
 class FDAClient:
     """Client for interacting with openFDA API (api.fda.gov)"""
 
@@ -90,7 +140,7 @@ class FDAClient:
         })
         # Dual rate limiters: per-minute and per-day
         self.minute_limiter = RateLimiter(max_requests=max_requests_per_minute, time_window=60.0)
-        self.day_limiter = RateLimiter(max_requests=max_requests_per_day, time_window=86400.0)
+        self.day_limiter = DailyQuotaLimiter(max_requests_per_day=max_requests_per_day)
 
     def set_api_key(self, api_key: str) -> None:
         """
@@ -105,7 +155,7 @@ class FDAClient:
 
             When setting an API key, you may want to adjust the daily limit:
             client.set_api_key(key)
-            client.day_limiter = RateLimiter(max_requests=120000, time_window=86400.0)
+            client.day_limiter = DailyQuotaLimiter(max_requests_per_day=120000)
         """
         self.session.params = {'api_key': api_key}
 
