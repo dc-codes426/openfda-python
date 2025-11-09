@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openfda-python"
+version = "0.1.0"
+description = "Python wrapper for OpenFDA APIs with comprehensive query support"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "GPL-3.0"}
+keywords = ["fda", "openfda", "api", "healthcare", "pharmaceuticals", "drugs", "devices"]
+authors = [
+    {name = "David", email = "dcconnor01@gmail.com"}
+]
+maintainers = [
+    {name = "David", email = "dcconnor01@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "requests>=2.25.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/dc-codes-426/openfda-python"
+Documentation = "https://github.com/dc-codes-426/openfda-python#readme"
+Repository = "https://github.com/dc-codes-426/openfda-python"
+Issues = "https://github.com/dc-codes-426/openfda-python/issues"
+Changelog = "https://github.com/dc-codes-426/openfda-python/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["api_client*"]
+exclude = ["tests*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=api_client --cov-report=term-missing"
