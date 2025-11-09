@@ -55,5 +55,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling and logging
 - Support for all FDA API query parameters (search, sort, count, limit, skip)
 
-[Unreleased]: https://github.com/yourusername/openfda-python/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/yourusername/openfda-python/releases/tag/v0.1.0
+[Unreleased]: https://github.com/dc-codes426/openfda-python/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/dc-codes426/openfda-python/releases/tag/v0.1.0

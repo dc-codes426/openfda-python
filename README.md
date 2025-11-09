@@ -34,18 +34,27 @@ A comprehensive Python wrapper for the [openFDA API](https://open.fda.gov/) that
 
 ## Installation
 
-Install from PyPI:
+### Install directly from GitHub (Recommended)
+
+You can install the package directly from GitHub without needing to publish to PyPI:
+
+```bash
+# Install the latest version from main branch
+pip install git+https://github.com/dc-codes426/openfda-python.git
+
+# Or install a specific version/tag
+pip install git+https://github.com/dc-codes426/openfda-python.git@v0.1.0
+
+# Or install in editable mode for development
+git clone https://github.com/dc-codes426/openfda-python.git
+cd openfda-python
+pip install -e .
+```
+
+### Install from PyPI (if published)
 
 ```bash
 pip install openfda-python
-```
-
-Or install from source:
-
-```bash
-git clone https://github.com/yourusername/openfda-python.git
-cd openfda-python
-pip install -e .
 ```
 
 ## Quick Start
@@ -287,4 +296,4 @@ This library is not officially associated with or endorsed by the FDA. It is an 
 
 ## Support
 
-For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/yourusername/openfda-python).
+For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/dc-codes426/openfda-python).

@@ -46,11 +46,11 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/dc-codes-426/openfda-python"
-Documentation = "https://github.com/dc-codes-426/openfda-python#readme"
-Repository = "https://github.com/dc-codes-426/openfda-python"
-Issues = "https://github.com/dc-codes-426/openfda-python/issues"
-Changelog = "https://github.com/dc-codes-426/openfda-python/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/dc-codes426/openfda-python"
+Documentation = "https://github.com/dc-codes426/openfda-python#readme"
+Repository = "https://github.com/dc-codes426/openfda-python"
+Issues = "https://github.com/dc-codes426/openfda-python/issues"
+Changelog = "https://github.com/dc-codes426/openfda-python/blob/main/CHANGELOG.md"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
